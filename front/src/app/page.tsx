@@ -53,32 +53,85 @@ export default function HomePage() {
     }));
   };
 
+  const check = () => {
+    if (
+      !formData.studentName ||
+      !formData.schoolGrade ||
+      !formData.parentPhone ||
+      formData.branch === "" ||
+      formData.diet === ""
+    ) {
+      alert("請填寫所有基本資料！");
+      return false;
+    }
+
+    const selectedCourses = Object.keys(formData.selectedCourses);
+    if (selectedCourses.length === 0) {
+      alert("請至少選擇一門課程！");
+      return false;
+    }
+
+    for (const index of selectedCourses) {
+      const course = formData.selectedCourses[Number(index)];
+      if (!course.transportation || !course.location) {
+        const courseInfo = courses[Number(index)];
+        alert(`請為 ${courseInfo.date} ${courseInfo.subject}《${courseInfo.name}》選擇交通方式和上課地點！`);
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!check()) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log("Response:", response);
+
+      if (response.ok) {
+        alert("表單提交成功！");
+      } else {
+        alert("表單提交失敗，請稍後再試。");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("表單提交失敗，請稍後再試。");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#f7f8fa] px-4 py-8 text-[#4b5563]">
       {" "}
-      {/* 🔖 px-4 改小，py-8 改小 */}
       {/* Header */}
       <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1> {/* 🔖 text-3xl */}
       <p className="text-center text-base mb-6 text-[#6b7280]">
         {" "}
-        {/* 🔖 text-base */}
         為了安排最適合您的課程，請協助填寫以下資料，我們期待與您一同前行 🌸
       </p>
       {/* 課表 Image */}
       <div className="mb-8">
         {" "}
-        {/* 🔖 mb-8 */}
         <img src="/schedule.png" alt="課程表" className="w-full max-w-md mx-auto rounded-2xl shadow-sm" />{" "}
-        {/* 🔖 max-w-md, rounded-2xl, shadow-sm */}
       </div>
       {/* Form */}
-      <form className="space-y-8 max-w-xl mx-auto">
+      <form className="space-y-8 max-w-xl mx-auto" onSubmit={handleSubmit}>
         {" "}
-        {/* 🔖 space-y-8 */}
         {/* 基本資料 */}
         <section className="bg-white p-6 rounded-2xl shadow-sm">
           {" "}
-          {/* 🔖 p-6, rounded-2xl */}
           <h2 className="text-2xl font-semibold mb-4 text-[#cfa7b4] text-center">基本資料</h2>
           <div className="flex flex-col gap-4">
             {[
