@@ -54,13 +54,7 @@ export default function HomePage() {
   };
 
   const check = () => {
-    if (
-      !formData.studentName ||
-      !formData.schoolGrade ||
-      !formData.parentPhone ||
-      formData.branch === "" ||
-      formData.diet === ""
-    ) {
+    if (!formData.studentName || !formData.schoolGrade || !formData.parentPhone || !formData.branch || !formData.diet) {
       alert("請填寫所有基本資料！");
       return false;
     }
@@ -86,9 +80,7 @@ export default function HomePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!check()) {
-      return;
-    }
+    if (!check()) return;
 
     try {
       const response = await fetch("http://localhost:5000/api/submit", {
@@ -114,24 +106,18 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f8fa] px-4 py-8 text-[#4b5563]">
-      {" "}
-      {/* Header */}
-      <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1> {/* 🔖 text-3xl */}
+      <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1>
+
       <p className="text-center text-base mb-6 text-[#6b7280]">
-        {" "}
         為了安排最適合您的課程，請協助填寫以下資料，我們期待與您一同前行 🌸
       </p>
-      {/* 課表 Image */}
+
       <div className="mb-8">
-        {" "}
-        <img src="/schedule.png" alt="課程表" className="w-full max-w-md mx-auto rounded-2xl shadow-sm" />{" "}
+        <img src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />{" "}
       </div>
-      {/* Form */}
+
       <form className="space-y-8 max-w-xl mx-auto" onSubmit={handleSubmit}>
-        {" "}
-        {/* 基本資料 */}
         <section className="bg-white p-6 rounded-2xl shadow-sm">
-          {" "}
           <h2 className="text-2xl font-semibold mb-4 text-[#cfa7b4] text-center">基本資料</h2>
           <div className="flex flex-col gap-4">
             {[
@@ -149,20 +135,19 @@ export default function HomePage() {
               />
             ))}
 
-            {/* 所屬分校 */}
             <select
               className="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-[#f9ccd3] focus:outline-none bg-[#fafafa] text-sm text-gray-500"
               value={formData.branch}
               onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
             >
               <option value="">選擇所屬分校</option>
-              <option value="總校">總校</option>
-              <option value="分校A">分校A</option>
-              <option value="分校B">分校B</option>
-              <option value="分校C">分校C</option>
+              <option value="南 P&C">南 P&C</option>
+              <option value="站前">站前</option>
+              <option value="美術館">美術館</option>
+              <option value="陽明">陽明</option>
+              <option value="楠梓">楠梓</option>
             </select>
 
-            {/* 葷素 */}
             <select
               className="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-[#f9ccd3] focus:outline-none bg-[#fafafa] text-sm text-gray-500"
               value={formData.diet}
@@ -174,7 +159,7 @@ export default function HomePage() {
             </select>
           </div>
         </section>
-        {/* 課程選擇 */}
+
         <section className="bg-white p-6 rounded-2xl shadow-sm">
           <h2 className="text-2xl font-semibold mb-4 text-[#94c9ad] text-center">課程選擇</h2>
 
@@ -189,7 +174,6 @@ export default function HomePage() {
                   }`}
                 >
                   <div className="flex items-start space-x-3">
-                    {/* Checkbox */}
                     <input
                       type="checkbox"
                       checked={selected}
@@ -197,9 +181,7 @@ export default function HomePage() {
                       className="accent-[#94c9ad] w-5 h-5 mt-1 shrink-0"
                     />
 
-                    {/* 課程資訊 */}
                     <div className="flex flex-col w-full">
-                      {/* 課程主資訊 */}
                       <div className="flex flex-col">
                         <span className="font-semibold text-gray-700 text-sm leading-snug">
                           <span className="text-[#cfa7b4]">{course.date}</span>・
@@ -207,7 +189,6 @@ export default function HomePage() {
                         </span>
                       </div>
 
-                      {/* 課程次資訊：時間 & 講師 */}
                       <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
                         <div>講師｜{course.lecturer}</div>
                         <div className="whitespace-nowrap">
@@ -217,10 +198,8 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* 選課後展開更多 */}
                   {selected && (
                     <div className="mt-4 flex flex-col gap-3">
-                      {/* Transportation */}
                       <div className="flex flex-col text-xs">
                         <label className="text-gray-500 mb-1">交通方式</label>
                         <select
@@ -237,7 +216,6 @@ export default function HomePage() {
                         </select>
                       </div>
 
-                      {/* Location */}
                       <div className="flex flex-col text-xs">
                         <label className="text-gray-500 mb-1">上課地點</label>
                         <select
@@ -262,7 +240,7 @@ export default function HomePage() {
             })}
           </div>
         </section>
-        {/* 提交按鈕 */}
+
         <div className="text-center">
           <button
             type="submit"
