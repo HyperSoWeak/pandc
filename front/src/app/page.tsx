@@ -91,6 +91,29 @@ export default function HomePage() {
       }
     }
 
+    const selectedCourseDates = selectedCourses.map((index) => courses[Number(index)].date);
+    const selectedCourseTimes = selectedCourses.map((index) => ({
+      start: courses[Number(index)].timeStart,
+      end: courses[Number(index)].timeEnd,
+    }));
+    const hasConflict = selectedCourseTimes.some((time, index) => {
+      return selectedCourseTimes.some((otherTime, otherIndex) => {
+        if (index !== otherIndex && selectedCourseDates[index] === selectedCourseDates[otherIndex]) {
+          return (
+            (time.start >= otherTime.start && time.start < otherTime.end) ||
+            (time.end > otherTime.start && time.end <= otherTime.end) ||
+            (time.start <= otherTime.start && time.end >= otherTime.end)
+          );
+        }
+        return false;
+      });
+    });
+
+    if (hasConflict) {
+      alert("選擇的課程時間衝突，請重新選擇！");
+      return false;
+    }
+
     return true;
   };
 
