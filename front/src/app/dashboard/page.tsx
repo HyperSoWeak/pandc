@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
+import { useRouter } from "next/navigation";
 import courses from "@/data/courses";
 
 interface Submission {
@@ -15,8 +16,18 @@ interface Submission {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("loggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+    setIsLoggedIn(isLoggedIn === "true");
+  }, [router]);
 
   useEffect(() => {
     const fetchSubmissions = async () => {
@@ -64,6 +75,10 @@ export default function Dashboard() {
     const encodedUri = encodeURI(csvContent);
     saveAs(encodedUri, "submissions.csv");
   };
+
+  if (!isLoggedIn) {
+    return <main className="min-h-screen flex items-center justify-center text-[#94c9ad] text-xl">請登入...</main>;
+  }
 
   if (loading) {
     return <main className="min-h-screen flex items-center justify-center text-[#94c9ad] text-xl">加載中...</main>;
