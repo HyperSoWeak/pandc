@@ -41,9 +41,7 @@ const saveData = (data: FormData) => {
 };
 
 const loadData = (): FormData[] => {
-  if (!fs.existsSync(filePath)) {
-    return [];
-  }
+  if (!fs.existsSync(filePath)) return [];
 
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data) as FormData[];
@@ -60,9 +58,20 @@ app.get("/api/submissions", (req, res) => {
 
 app.post("/api/submit", (req, res) => {
   const formData = req.body;
-  console.log("Received form data:", formData);
   saveData(formData);
   res.status(200).json({ message: "Form submitted successfully!" });
+});
+
+const ADMIN_PASSWORD = "pc2025admin";
+
+app.post("/api/login", (req, res) => {
+  const { password } = req.body;
+
+  if (password === ADMIN_PASSWORD) {
+    res.status(200).json({ message: "Login successful" });
+  } else {
+    res.status(401).json({ message: "Incorrect password" });
+  }
 });
 
 const PORT = 5000;
