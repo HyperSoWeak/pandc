@@ -122,7 +122,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f7f8fa] px-4 py-8 text-[#4b5563]">
+    <main className="min-h-screen bg-[#f7f8fa] px-4 py-12 text-[#4b5563]">
       <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1>
 
       <p className="text-center text-base mb-6 text-[#6b7280]">
