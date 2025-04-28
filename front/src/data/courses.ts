@@ -1,4 +1,22 @@
-const courses = [
+interface Course {
+  date: string;
+  subject: string;
+  name: string;
+  lecturer: string;
+  timeStart: string;
+  timeEnd: string;
+  location: {
+    南PC: boolean;
+    站前: boolean;
+    美術館: boolean;
+    陽明: boolean;
+    楠梓: boolean;
+  };
+  xpos: number;
+  ypos: number;
+}
+
+const courses: Course[] = [
   {
     date: "5/19（一）",
     subject: "英文",

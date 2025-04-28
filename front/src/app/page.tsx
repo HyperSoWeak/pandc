@@ -262,10 +262,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <button
             type="submit"
-            className="bg-[#cfa7b4] hover:bg-[#f9ccd3] text-white font-bold py-3 px-10 rounded-full shadow-md transform hover:scale-105 transition text-sm"
+            className="bg-[#94c9ad] hover:bg-[#cfa7b4] text-white font-bold py-3 px-8 rounded-full shadow-md transform hover:scale-105 transition text-sm"
           >
             提交表單
           </button>
