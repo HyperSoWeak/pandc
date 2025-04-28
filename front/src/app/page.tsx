@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import courses from "@/data/courses";
+import { useRouter } from "next/navigation";
 
-const transportationOptions = ["自行前往", "搭乘交通車 - 去程", "搭乘交通車 - 回程", "搭乘交通車 - 來回"];
+const transportationOptions = ["自行前往", "僅去程", "僅回程", "來回"];
+const branchOptions = ["南 P&C", "站前", "美術館", "陽明", "楠梓"];
+const dietOptions = ["不訂餐", "葷食", "素食"];
 
 export default function HomePage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     studentName: "",
     schoolGrade: "",
@@ -67,9 +72,21 @@ export default function HomePage() {
 
     for (const index of selectedCourses) {
       const course = formData.selectedCourses[Number(index)];
-      if (!course.transportation || !course.location) {
-        const courseInfo = courses[Number(index)];
-        alert(`請為 ${courseInfo.date} ${courseInfo.subject}《${courseInfo.name}》選擇交通方式和上課地點！`);
+      if (!course.transportation) {
+        alert(
+          `請為 ${courses[Number(index)].date} ${courses[Number(index)].subject}《${
+            courses[Number(index)].name
+          }》選擇交通方式！`
+        );
+        return false;
+      }
+
+      if (course.transportation !== "自行前往" && !course.location) {
+        alert(
+          `請為 ${courses[Number(index)].date} ${courses[Number(index)].subject}《${
+            courses[Number(index)].name
+          }》選擇乘車地點！`
+        );
         return false;
       }
     }
@@ -91,10 +108,10 @@ export default function HomePage() {
         body: JSON.stringify(formData),
       });
 
-      console.log("Response:", response);
-
       if (response.ok) {
         alert("表單提交成功！");
+        localStorage.setItem("formData", JSON.stringify(formData));
+        router.push("/result");
       } else {
         alert("表單提交失敗，請稍後再試。");
       }
@@ -109,11 +126,11 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1>
 
       <p className="text-center text-base mb-6 text-[#6b7280]">
-        為了安排最適合您的課程，請協助填寫以下資料，我們期待與您一同前行 🌸
+        為了安排最適合您的課程，請協助填寫以下資料，我們期待與您一同前行
       </p>
 
       <div className="mb-8">
-        <img src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />{" "}
+        <img src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
       </div>
 
       <form className="space-y-8 max-w-xl mx-auto" onSubmit={handleSubmit}>
@@ -141,11 +158,11 @@ export default function HomePage() {
               onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
             >
               <option value="">選擇所屬分校</option>
-              <option value="南 P&C">南 P&C</option>
-              <option value="站前">站前</option>
-              <option value="美術館">美術館</option>
-              <option value="陽明">陽明</option>
-              <option value="楠梓">楠梓</option>
+              {branchOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
 
             <select
@@ -154,8 +171,11 @@ export default function HomePage() {
               onChange={(e) => setFormData({ ...formData, diet: e.target.value })}
             >
               <option value="">選擇飲食習慣</option>
-              <option value="葷食">葷食</option>
-              <option value="素食">素食</option>
+              {dietOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
         </section>
@@ -216,23 +236,24 @@ export default function HomePage() {
                         </select>
                       </div>
 
-                      <div className="flex flex-col text-xs">
-                        <label className="text-gray-500 mb-1">上課地點</label>
-                        <select
-                          className="border border-gray-300 rounded-xl p-2 bg-white focus:ring-2 focus:ring-[#94c9ad] text-sm"
-                          value={formData.selectedCourses[idx].location}
-                          onChange={(e) => handleLocationChange(idx, e.target.value)}
-                        >
-                          <option value="">選擇上課地點</option>
-                          {Object.entries(course.location)
-                            .filter(([_, available]) => available)
-                            .map(([loc]) => (
-                              <option key={loc} value={loc}>
-                                {loc}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
+                      {formData.selectedCourses[idx].transportation !== "" &&
+                        formData.selectedCourses[idx].transportation !== "自行前往" && (
+                          <div className="flex flex-col text-xs">
+                            <label className="text-gray-500 mb-1">乘車地點</label>
+                            <select
+                              className="border border-gray-300 rounded-xl p-2 bg-white focus:ring-2 focus:ring-[#94c9ad] text-sm"
+                              value={formData.selectedCourses[idx].location}
+                              onChange={(e) => handleLocationChange(idx, e.target.value)}
+                            >
+                              <option value="">選擇乘車地點</option>
+                              {branchOptions.map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
                     </div>
                   )}
                 </div>
