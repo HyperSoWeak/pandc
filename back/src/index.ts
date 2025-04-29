@@ -74,9 +74,8 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-const PORT = 5000;
-const NEXT_PUBLIC_BACKEND_URL = `http://localhost:${PORT}`;
+const PORT = 3500;
 
 app.listen(PORT, () => {
-  console.log(`Backend is running on ${NEXT_PUBLIC_BACKEND_URL}`);
+  console.log(`Backend is running on http://localhost:${PORT}`);
 });

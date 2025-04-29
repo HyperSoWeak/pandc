@@ -5,6 +5,7 @@ import courses from "@/data/courses";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FormData } from "@/types/FormData";
+import { API_URL } from "@/config";
 
 const transportationOptions = ["自行前往", "僅去程", "僅回程", "來回"];
 const branchOptions = ["南 P&C", "站前", "美術館", "陽明", "楠梓"];
@@ -125,7 +126,7 @@ export default function HomePage() {
     if (!check()) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/submit", {
+      const response = await fetch(`${API_URL}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import { useRouter } from "next/navigation";
 import courses from "@/data/courses";
+import { API_URL } from "@/config";
 
 interface Submission {
   studentName: string;
@@ -32,7 +33,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/submissions");
+        const res = await fetch(`${API_URL}/submissions`);
         const data = await res.json();
         setSubmissions(data.reverse());
       } catch (error) {
