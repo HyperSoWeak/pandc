@@ -48,8 +48,14 @@ const loadData = (): FormData[] => {
 };
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://59.127.99.53:3000"],
+    methods: ["GET", "POST", "OPTIONS"],
+  })
+);
 
 app.get("/api/submissions", (req, res) => {
   const submissions = loadData();
