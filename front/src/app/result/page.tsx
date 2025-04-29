@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import courses from "@/data/courses";
+import { FormData } from "@/types/FormData";
 
 export default function ResultPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [formData, setFormData] = useState<any>(null);
+  const [formData, setFormData] = useState<FormData>({} as FormData);
 
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
@@ -29,13 +30,11 @@ export default function ResultPage() {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
 
-      console.log("formData", formData);
-
       ctx.font = "48px sans-serif";
       ctx.fillStyle = "#000";
       ctx.fillText(`${formData.studentName} 專屬 P&C 課表`, 120, 130);
 
-      Object.entries(formData.selectedCourses).forEach(([index, courseInfo]: any) => {
+      Object.entries(formData.selectedCourses).forEach(([index, courseInfo]) => {
         const course = courses[Number(index)];
         if (!course) return;
 

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import courses from "@/data/courses";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { FormData } from "@/types/FormData";
 
 const transportationOptions = ["自行前往", "僅去程", "僅回程", "來回"];
 const branchOptions = ["南 P&C", "站前", "美術館", "陽明", "楠梓"];
@@ -11,13 +13,13 @@ const dietOptions = ["不訂餐", "葷食", "素食"];
 export default function HomePage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     studentName: "",
     schoolGrade: "",
     parentPhone: "",
     branch: "",
     diet: "",
-    selectedCourses: {} as Record<number, { transportation: string; location: string }>,
+    selectedCourses: {},
   });
 
   const handleCourseSelect = (index: number) => {
@@ -153,7 +155,7 @@ export default function HomePage() {
       </p>
 
       <div className="mb-8">
-        <img src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
+        <Image src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
       </div>
 
       <form className="space-y-8 max-w-xl mx-auto" onSubmit={handleSubmit}>

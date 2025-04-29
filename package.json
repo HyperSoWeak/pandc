@@ -1,0 +1,26 @@
+{
+  "name": "pandc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm --prefix front start\" \"npm --prefix back start\"",
+    "build": "concurrently \"npm --prefix front run build\" \"npm --prefix back run build\"",
+    "dev": "concurrently \"npm --prefix front run dev\" \"npm --prefix back run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HyperSoWeak/pandc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HyperSoWeak/pandc/issues"
+  },
+  "homepage": "https://github.com/HyperSoWeak/pandc#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
