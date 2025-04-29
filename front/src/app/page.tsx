@@ -152,7 +152,7 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold text-center mb-3 text-[#cfa7b4]">114 P&C 銜接課程調查表</h1>
 
       <p className="text-center text-base mb-6 text-[#6b7280]">
-        為了安排最適合您的課程，請協助填寫以下資料，我們期待與您一同前行
+        為了確保銜接課程的完整性並提供完善的照顧，請協助填寫以下資料，我們期待與您一同前行
       </p>
 
       <div className="mb-8">
