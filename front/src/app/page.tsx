@@ -156,7 +156,9 @@ export default function HomePage() {
       </p>
 
       <div className="mb-8">
-        <Image src="/schedule.png" alt="課程表" className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
+        <div className="w-full max-w-xl mx-auto rounded-2xl shadow-sm overflow-hidden">
+          <Image src="/schedule.png" alt="課程表" width={800} height={600} layout="responsive" objectFit="contain" />
+        </div>
       </div>
 
       <form className="space-y-8 max-w-xl mx-auto" onSubmit={handleSubmit}>

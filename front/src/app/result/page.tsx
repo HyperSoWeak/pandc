@@ -6,7 +6,14 @@ import { FormData } from "@/types/FormData";
 
 export default function ResultPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [formData, setFormData] = useState<FormData>({} as FormData);
+  const [formData, setFormData] = useState<FormData>({
+    studentName: "",
+    schoolGrade: "",
+    parentPhone: "",
+    branch: "",
+    diet: "",
+    selectedCourses: {},
+  });
 
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
@@ -34,8 +41,10 @@ export default function ResultPage() {
       ctx.fillStyle = "#000";
       ctx.fillText(`${formData.studentName} 專屬 P&C 課表`, 120, 130);
 
-      Object.entries(formData.selectedCourses).forEach(([index, courseInfo]) => {
-        const course = courses[Number(index)];
+      Object.keys(formData.selectedCourses).forEach((keyStr) => {
+        const index = Number(keyStr);
+        const courseInfo = formData.selectedCourses[index];
+        const course = courses[index];
         if (!course) return;
 
         ctx.font = "22px sans-serif";
