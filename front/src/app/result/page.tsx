@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import courses from "@/data/courses";
 import { FormData } from "@/types/FormData";
+import NextImage from "next/image";
 
 export default function ResultPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     studentName: "",
     schoolGrade: "",
@@ -65,6 +67,9 @@ export default function ResultPage() {
             ? "自行前往"
             : `${courseInfo.transportation} | ${courseInfo.location}`;
         ctx.fillText(transText, course.xpos + 10, course.ypos + 75);
+
+        const dataURL = canvas.toDataURL("image/png");
+        setImageUrl(dataURL);
       });
     };
   }, [formData]);
@@ -75,10 +80,21 @@ export default function ResultPage() {
       <p className="text-center text-base mb-6 text-[#6b7280]">
         感謝您填寫調查表！以下是您專屬的 P&C 課表，請務必確認課程資訊正確無誤。
         <br />
-        右鍵點擊圖片（電腦）或長按圖片（手機）即可下載課表。
+        您可以長按圖片下載（手機）或右鍵儲存（電腦）。
       </p>
+
       <div className="mb-8">
-        <canvas ref={canvasRef} className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
+        {imageUrl ? (
+          <NextImage
+            src={imageUrl}
+            alt="專屬課表"
+            width={800}
+            height={600}
+            className="w-full max-w-xl mx-auto rounded-2xl shadow-sm"
+          />
+        ) : (
+          <canvas ref={canvasRef} className="w-full max-w-xl mx-auto rounded-2xl shadow-sm" />
+        )}
       </div>
     </main>
   );

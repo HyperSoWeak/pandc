@@ -167,7 +167,7 @@ export default function HomePage() {
           <div className="flex flex-col gap-4">
             {[
               { type: "text", placeholder: "學生姓名", value: formData.studentName, key: "studentName" },
-              { type: "text", placeholder: "學校年級 例：五福二", value: formData.schoolGrade, key: "schoolGrade" },
+              { type: "text", placeholder: "學校", value: formData.schoolGrade, key: "schoolGrade" },
               { type: "text", placeholder: "手機號碼", value: formData.parentPhone, key: "parentPhone" },
             ].map((field, idx) => (
               <input
