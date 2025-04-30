@@ -8,6 +8,7 @@ import { FormData } from "@/types/FormData";
 import { API_URL } from "@/config";
 
 const transportationOptions = ["自行前往", "僅去程", "僅回程", "來回"];
+const locationOptions = ["南 P&C", "美術館", "陽明", "楠梓"];
 const branchOptions = ["南 P&C", "站前", "美術館", "陽明", "楠梓"];
 const dietOptions = ["不訂餐", "葷食", "素食"];
 
@@ -274,7 +275,7 @@ export default function HomePage() {
                               onChange={(e) => handleLocationChange(idx, e.target.value)}
                             >
                               <option value="">選擇乘車地點</option>
-                              {branchOptions.map((option) => (
+                              {locationOptions.map((option) => (
                                 <option key={option} value={option}>
                                   {option}
                                 </option>
