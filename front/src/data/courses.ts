@@ -378,7 +378,7 @@ const courses: Course[] = [
     date: "5/31（六）",
     subject: "英文",
     name: "人際相處",
-    lecturer: "念蘋(B)",
+    lecturer: "承傑(B)",
     timeStart: "09:30",
     timeEnd: "12:10",
     location: {
@@ -614,9 +614,9 @@ const courses: Course[] = [
   },
   {
     date: "6/5（四）",
-    subject: "化學",
-    name: "氧化還原",
-    lecturer: "黃鑫(1)",
+    subject: "物理",
+    name: "摩擦",
+    lecturer: "吳笛(1)",
     timeStart: "09:30",
     timeEnd: "12:10",
     location: {
@@ -768,7 +768,7 @@ const courses: Course[] = [
   {
     date: "6/7（六）",
     subject: "化學",
-    name: "碰撞",
+    name: "溶液",
     lecturer: "黃鑫(5)",
     timeStart: "13:30",
     timeEnd: "16:10",

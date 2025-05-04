@@ -256,12 +256,18 @@ export default function HomePage() {
                           value={formData.selectedCourses[idx].transportation}
                           onChange={(e) => handleTransportationChange(idx, e.target.value)}
                         >
-                          <option value="">選擇交通方式</option>
-                          {transportationOptions.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
+                          {course.date.includes("（六）") || course.date.includes("（日）") ? (
+                            <option value="自行前往">自行前往</option>
+                          ) : (
+                            <>
+                              <option value="">選擇交通方式</option>
+                              {transportationOptions.map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </>
+                          )}
                         </select>
                       </div>
 
