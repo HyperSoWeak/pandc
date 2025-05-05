@@ -24,13 +24,13 @@ export default function HomePage() {
     selectedCourses: {},
   });
 
-  const handleCourseSelect = (index: number) => {
+  const handleCourseSelect = (index: number, weekend: boolean) => {
     setFormData((prev) => {
       const selected = { ...prev.selectedCourses };
       if (selected[index]) {
         delete selected[index];
       } else {
-        selected[index] = { transportation: "", location: "" };
+        selected[index] = { transportation: weekend ? "自行前往" : "", location: "" };
       }
       return { ...prev, selectedCourses: selected };
     });
@@ -226,7 +226,7 @@ export default function HomePage() {
                     <input
                       type="checkbox"
                       checked={selected}
-                      onChange={() => handleCourseSelect(idx)}
+                      onChange={() => handleCourseSelect(idx, course.date.includes("（六）") || course.date.includes("（日）"))}
                       className="accent-[#94c9ad] w-5 h-5 mt-1 shrink-0"
                     />
 
