@@ -70,11 +70,11 @@ export default function Dashboard() {
       ];
     });
 
-    const csvContent =
-      "data:text/csv;charset=utf-8," + [header, ...rows].map((e) => e.map((v) => `"${v}"`).join(",")).join("\n");
+    const bom = "\uFEFF";
+    const csvContent = bom + [header, ...rows].map((e) => e.map((v) => `"${v}"`).join(",")).join("\n");
 
-    const encodedUri = encodeURI(csvContent);
-    saveAs(encodedUri, "submissions.csv");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "submissions.csv");
   };
 
   if (!isLoggedIn) {
